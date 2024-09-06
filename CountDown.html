@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer with Reset</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #timer {
+
+          background-color: #4caf50; 
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          border-radius: 5px;
+          font-size: 48px;
+          margin: 20px 0;
+           
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Countdown Timer</h1>
+    <div id="timer">00:00:00</div>
+    <button onclick="resetTimer()">Reset Timer</button>
+
+    <script>
+        let countdownDuration = 10 * 60; // 10 minutes in seconds
+        let timeRemaining = countdownDuration;
+        let countdownInterval;
+
+        function startTimer() {
+            countdownInterval = setInterval(function() {
+                if (timeRemaining <= 0) {
+                    clearInterval(countdownInterval);
+                } else {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+
+            const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timer').textContent = formattedTime;
+        }
+
+        function resetTimer() {
+            clearInterval(countdownInterval);
+            timeRemaining = countdownDuration;
+            updateTimerDisplay();
+            startTimer();
+        }
+
+        // Start the countdown timer when the page loads
+        window.onload = function() {
+            updateTimerDisplay();
+            startTimer();
+        };
+    </script>
+
+</body>
+</html>
